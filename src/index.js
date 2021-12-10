@@ -57,7 +57,7 @@ const main = async () => {
         setInterval(() => {
             fileSystem = loadFileSystem()
             operationsReport(fileSystem)
-        }, 10000)
+        }, 1000 * 60 * 60 * 24)
         getCommands(userFound, fileSystem, "homeDir\\")
         
     }
