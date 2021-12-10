@@ -1,7 +1,7 @@
 import { createIOperationReport, createOperation } from "./objectMakers.js"
 import { saveFileSystem } from "../data/fileSystem.js"
 
-export const addOperation = (fileSystem, user, level, command, errorMessage) => {
+export const addOperation = (fileSystem, user, command, level, errorMessage) => {
     console.log(errorMessage)
     const operationsFile = fileSystem.filesAndDirs[0]
     const operations = operationsFile.operations

@@ -22,12 +22,12 @@ const main = async () => {
         const password = await getPassword()
         let userObject = logbookUsers.find(user => user.userName === name)
         if(userObject != undefined && userObject.password != password) {
-            addOperation(fileSystem, name, 1, null, "Access denied. Wrong password")
+            addOperation(fileSystem, name, null, 1, "Access denied. Wrong password")
             continue
         }
         if(userObject !== undefined && (userObject.userName == "admin" || await checkPasswordAuthenticity(userObject.passwordChangeTime))) {
             if(userObject.forbidden) {
-                addOperation(fileSystem, name, 3, null, "Access denied. You have had too many mistakes proving to be the owner of the account. Ask the admin to register you again")
+                addOperation(fileSystem, name, null, 3, "Access denied. You have had too many mistakes proving to be the owner of the account. Ask the admin to register you again")
                 process.exit(0)
             }
             userFound = name
@@ -46,7 +46,7 @@ const main = async () => {
                 getCommands(userFound, fileSystem, "homeDir\\")
                 isWaiting = false
             } else {
-                addOperation(fileSystem, currUser, 3, null, "\nYou have been answering for too long")
+                addOperation(fileSystem, userFound, null, 3, "\nYou have been answering for too long")
                 process.exit(0)
             }
         }, 1000  *60 * 5)

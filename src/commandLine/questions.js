@@ -21,7 +21,7 @@ export const askQuestion = (currUser, fileSystem) => new Promise(async (resolve,
                     asnwered = true
                 } else {
                     
-                    addOperation(fileSystem, currUser, null, "Wrong answer. You have to log in again.")
+                    addOperation(fileSystem, currUser, null, 3, "Wrong answer. You have to log in again.")
                     user.numberOfMistakes++
                     saveFileSystem(fileSystem)
                     if(user.numberOfMistakes != maxNumberOfFails)process.exit(0)

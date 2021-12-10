@@ -1,5 +1,5 @@
 import { createNewUser } from "./objectMakers.js"
-import { updateFileSystem, saveFileSystem } from "../data/fileSystem.js"
+import { updateFileSystem, saveFileSystem, loadFileSystem } from "../data/fileSystem.js"
 
 const randomlyGetQuestions = (fileSystem) => {
     const controlQuestions = fileSystem.filesAndDirs.find(obj => obj.name == "ask.txt").content
@@ -21,9 +21,7 @@ export const adminCommands = (fileSystem, command, userName = null, password = n
                 fileSystem.readRights.push(userName)
                 fileSystem.writeRights.push(userName)
                 fileSystem.filesAndDirs.find(disk => disk.name === "C").readRights.push(userName)
-                fileSystem.filesAndDirs.find(disk => disk.name === "C").writeRights.push(userName)
                 fileSystem.filesAndDirs.find(disk => disk.name === "D").readRights.push(userName)
-                fileSystem.filesAndDirs.find(disk => disk.name === "D").writeRights.push(userName)
                 saveFileSystem(fileSystem)
                 resolve(fileSystem)
             } else {
@@ -33,12 +31,13 @@ export const adminCommands = (fileSystem, command, userName = null, password = n
         }
         break
         case "prntoprep": {
+            fileSystem = loadFileSystem()
             const operationsLog = fileSystem.filesAndDirs.find(obj => obj.name == "operationsLog")
             const report = operationsLog.report
             if(report.length === 0) {
                 console.log("The report is not ready yet")
             } else {
-                console.log(report)
+                console.log(JSON.stringify(report, null, 20))
             }
             resolve()
             break

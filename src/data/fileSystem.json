@@ -2,14 +2,10 @@
   "name": "homeDir",
   "type": "directory",
   "readRights": [
-    "admin",
-    "testuser1",
-    "testuser2"
+    "admin"
   ],
   "writeRights": [
-    "admin",
-    "testuser1",
-    "testuser2"
+    "admin"
   ],
   "filesAndDirs": [
     {
@@ -21,38 +17,8 @@
       "writeRights": [
         "admin"
       ],
-      "operations": [
-        {
-          "userName": "testuser1",
-          "operationName": null,
-          "levelOfDanger": 1,
-          "date": "10/12/2021",
-          "message": "Access denied. Wrong password"
-        }
-      ],
-      "report": [
-        {
-          "userName": "testuser1",
-          "operations": []
-        },
-        {
-          "userName": "testuser2",
-          "operations": [
-            {
-              "userName": "testuser2",
-              "operationName": "cd",
-              "date": "09/12/2021",
-              "message": "Access denied. You don't have rights to access the folder."
-            },
-            {
-              "userName": "testuser2",
-              "operationName": null,
-              "date": "10/12/2021",
-              "message": "Wrong answer"
-            }
-          ]
-        }
-      ]
+      "operations": [],
+      "report": []
     },
     {
       "name": "logBook",
@@ -72,8 +38,8 @@
           "userName": "testuser1",
           "password": "1234",
           "passwordChangeTime": 1639065278784,
-          "forbidden": true,
-          "numberOfMistakes": 4,
+          "forbidden": false,
+          "numberOfMistakes": 0,
           "questions": [
             12,
             4,
@@ -85,7 +51,7 @@
           "password": "1111",
           "passwordChangeTime": 1639075307965,
           "forbidden": false,
-          "numberOfMistakes": 3,
+          "numberOfMistakes": 1,
           "questions": [
             1,
             19,

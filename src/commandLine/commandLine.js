@@ -2,7 +2,7 @@ import * as readline from 'readline'
 import { executeCommand } from '../commands/commands.js'
 import { getNewUserName, getNewUserPassword, checkPassword } from './regAndAuth.js';
 import { adminCommands } from '../commands/adminCommands.js';
-
+import { addOperation } from '../commands/operations.js';
 export const rl = readline.createInterface(process.stdin, process.stdout)
 
 
@@ -30,19 +30,19 @@ export const getCommands = (currUser, fileSystem, currentDirUrl, currentDir = nu
         command = command.split(" ")
         if (command[0] === "mkdir" || command[0] === "rm" || command[0] == "vi") {
             if(command.length == 1) {
-                addOperation(fileSystem, user, command[0], 0, "Wrong number of arguments")
+                addOperation(fileSystem, currUser, command[0], 0, "Wrong number of arguments")
             } else {
                 [fileSystem, currentDir] = await executeCommand(currUser, fileSystem, currentDir, currentDirUrl, command[0], command[1])
             }
         } else if (command[0] === "cd"){
             if(command.length == 1) {
-                addOperation(fileSystem, user, command[0], 0, "Wrong number of arguments")
+                addOperation(fileSystem, currUser, command[0], 0, "Wrong number of arguments")
             } else {
                 [currentDir, currentDirUrl] = await executeCommand(currUser, fileSystem, currentDir, currentDirUrl, command[0], command[1])
             }
         } else if (command[0] === "reguser") {
             if (currUser != "admin") {
-                caddOperation(fileSystem, user, command[0], 2, "Access deniesd. Only administrator is allowed to use the command")
+                addOperation(fileSystem, currUser, command[0], 2, "Access denied. Only administrator is allowed to use the command")
             } else {
                 let newUserName = await getNewUserName()
                 let newUserPassword = await checkPassword()
@@ -50,7 +50,7 @@ export const getCommands = (currUser, fileSystem, currentDirUrl, currentDir = nu
             }
         } else if(command[0] === "prntoprep") {
             if (currUser != "admin") {
-                caddOperation(fileSystem, user, command[0], 2,"Access deniesd. Only administrator is allowed to use the command")
+                addOperation(fileSystem, currUser, command[0], 2,"Access denied. Only administrator is allowed to use the command")
             } else {
                 await adminCommands(fileSystem, command[0])
             }

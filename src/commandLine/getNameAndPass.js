@@ -19,8 +19,6 @@ export const getPassword = () => new Promise((resolve, reject) => {
         resolve(pw)
     });
     rl.stdoutMuted = true
-}).then(() => {
-    rl.stdoutMuted = false
 })
 
 export const checkPasswordAuthenticity = (time) => {

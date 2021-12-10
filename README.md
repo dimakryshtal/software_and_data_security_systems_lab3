@@ -1,4 +1,4 @@
-# Lab2
+# Lab3
 
 * Install dependencies `npm install`
 
