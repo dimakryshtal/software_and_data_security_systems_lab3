@@ -4,22 +4,15 @@
   "readRights": [
     "admin",
     "testuser1",
-    "testuser2",
-    "testuser3",
-    "testuser4",
-    "testUser5",
-    "testuser6"
+    "testuser2"
   ],
   "writeRights": [
     "admin",
     "testuser1",
-    "testuser2",
-    "testuser3",
-    "testuser4",
-    "testUser5",
-    "testuser6"
+    "testuser2"
   ],
-  "filesAndDirs": [{
+  "filesAndDirs": [
+    {
       "name": "operationsLog",
       "type": "file",
       "readRights": [
@@ -28,7 +21,38 @@
       "writeRights": [
         "admin"
       ],
-      "operations": []
+      "operations": [
+        {
+          "userName": "testuser1",
+          "operationName": null,
+          "levelOfDanger": 1,
+          "date": "10/12/2021",
+          "message": "Access denied. Wrong password"
+        }
+      ],
+      "report": [
+        {
+          "userName": "testuser1",
+          "operations": []
+        },
+        {
+          "userName": "testuser2",
+          "operations": [
+            {
+              "userName": "testuser2",
+              "operationName": "cd",
+              "date": "09/12/2021",
+              "message": "Access denied. You don't have rights to access the folder."
+            },
+            {
+              "userName": "testuser2",
+              "operationName": null,
+              "date": "10/12/2021",
+              "message": "Wrong answer"
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "logBook",
@@ -61,59 +85,11 @@
           "password": "1111",
           "passwordChangeTime": 1639075307965,
           "forbidden": false,
-          "numberOfMistakes": 2,
+          "numberOfMistakes": 3,
           "questions": [
             1,
             19,
             11
-          ]
-        },
-        {
-          "userName": "testuser3",
-          "password": "2222",
-          "passwordChangeTime": 1639077198553,
-          "forbidden": false,
-          "numberOfMistakes": 0,
-          "questions": [
-            6,
-            5,
-            19
-          ]
-        },
-        {
-          "userName": "testuser4",
-          "password": "4444",
-          "passwordChangeTime": 1639077639587,
-          "forbidden": false,
-          "numberOfMistakes": 0,
-          "questions": [
-            22,
-            5,
-            15
-          ]
-        },
-        {
-          "userName": "testUser5",
-          "password": "7777",
-          "passwordChangeTime": 1639078287503,
-          "forbidden": false,
-          "numberOfMistakes": 0,
-          "questions": [
-            1,
-            22,
-            21
-          ]
-        },
-        {
-          "userName": "testuser6",
-          "password": "8888",
-          "passwordChangeTime": 1639078328266,
-          "forbidden": false,
-          "numberOfMistakes": 0,
-          "questions": [
-            5,
-            14,
-            6
           ]
         }
       ]
@@ -335,29 +311,23 @@
       "type": "directory",
       "readRights": [
         "admin",
-        "testuser2",
-        "testuser3",
-        "testuser4",
-        "testUser5",
-        "testuser6"
+        "testuser2"
       ],
       "writeRights": [
         "admin",
-        "testuser2",
-        "testuser3",
-        "testuser4",
-        "testUser5",
-        "testuser6"
+        "testuser2"
       ],
       "filesAndDirs": [
         {
           "name": "txt1",
           "type": "file",
           "readRights": [
-            "admin"
+            "admin",
+            "testuser2"
           ],
           "writeRights": [
-            "admin"
+            "admin",
+            "testuser2"
           ],
           "content": "testfsafasf"
         }
@@ -368,19 +338,11 @@
       "type": "directory",
       "readRights": [
         "admin",
-        "testuser2",
-        "testuser3",
-        "testuser4",
-        "testUser5",
-        "testuser6"
+        "testuser2"
       ],
       "writeRights": [
         "admin",
-        "testuser2",
-        "testuser3",
-        "testuser4",
-        "testUser5",
-        "testuser6"
+        "testuser2"
       ],
       "filesAndDirs": []
     },

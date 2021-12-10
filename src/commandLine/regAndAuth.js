@@ -1,5 +1,5 @@
 import * as readline from "readline";
-import { regAndAuthCommands } from "../commands/regAndAuthCommands.js";
+// import { adminCommands } from "../commands/adminCommands.js";
 import { rl } from "./commandLine.js";
 import { minPasswordLength } from "../index.js";
 
@@ -18,6 +18,8 @@ export const getNewUserPassword = () => new Promise((resolve, reject) => {
         resolve(pw)
     });
     rl.stdoutMuted = true
+}).then(() => {
+    rl.stdoutMuted = false
 })
 
 export const checkPassword = () =>  new Promise(async(resolve, reject) => {

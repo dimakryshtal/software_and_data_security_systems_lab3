@@ -19,6 +19,8 @@ export const getPassword = () => new Promise((resolve, reject) => {
         resolve(pw)
     });
     rl.stdoutMuted = true
+}).then(() => {
+    rl.stdoutMuted = false
 })
 
 export const checkPasswordAuthenticity = (time) => {
@@ -28,7 +30,8 @@ export const checkPasswordAuthenticity = (time) => {
         return true
     } else {
         rl.question("The password is too old. It is time to change it", () => {})
-        return false
+
+        process.exit(0)
     }
     
 }

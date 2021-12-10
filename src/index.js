@@ -2,6 +2,7 @@ import { getCommands, rl} from "./commandLine/commandLine.js"
 import { getName, getPassword, checkPasswordAuthenticity } from "./commandLine/getNameAndPass.js"
 import { loadFileSystem, createFileSystem, saveFileSystem } from "./data/fileSystem.js"
 import { askQuestion } from "./commandLine/questions.js"
+import { operationsReport, addOperation } from "./commands/operations.js"
 
 export const minPasswordLength = 4
 export const maxNumberOfUser = 8
@@ -19,10 +20,14 @@ const main = async () => {
     while(userFound === null) {
         const name = await getName()
         const password = await getPassword()
-        let userObject = logbookUsers.find(user => user.userName === name && user.password === password)
+        let userObject = logbookUsers.find(user => user.userName === name)
+        if(userObject != undefined && userObject.password != password) {
+            addOperation(fileSystem, name, 1, null, "Access denied. Wrong password")
+            continue
+        }
         if(userObject !== undefined && (userObject.userName == "admin" || await checkPasswordAuthenticity(userObject.passwordChangeTime))) {
             if(userObject.forbidden) {
-                console.log("You have had too many mistakes proving to be the owner of the account. Ask the admin to register you again")
+                addOperation(fileSystem, name, 3, null, "Access denied. You have had too many mistakes proving to be the owner of the account. Ask the admin to register you again")
                 process.exit(0)
             }
             userFound = name
@@ -32,8 +37,8 @@ const main = async () => {
     }
 
     if(userFound != "admin") {
-        
         setInterval(async () => {
+            fileSystem = loadFileSystem()
             if(!isWaiting) {
                 isWaiting = true
                 rl.write('\r')
@@ -41,7 +46,7 @@ const main = async () => {
                 getCommands(userFound, fileSystem, "homeDir\\")
                 isWaiting = false
             } else {
-                console.log("\nYou have been answering for too long")
+                addOperation(fileSystem, currUser, 3, null, "\nYou have been answering for too long")
                 process.exit(0)
             }
         }, 1000  *60 * 5)
@@ -49,6 +54,10 @@ const main = async () => {
         await askQuestion(userFound, fileSystem)
         getCommands(userFound, fileSystem, "homeDir\\")
     } else {
+        setInterval(() => {
+            fileSystem = loadFileSystem()
+            operationsReport(fileSystem)
+        }, 10000)
         getCommands(userFound, fileSystem, "homeDir\\")
         
     }

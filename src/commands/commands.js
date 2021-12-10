@@ -1,6 +1,7 @@
 import { saveFileSystem, updateFileSystem} from "../data/fileSystem.js"
 import { startTextEditor } from "../commandLine/startTextEditor.js"
 import { createNewDir, createNewFile } from "./objectMakers.js"
+import { addOperation } from "./operations.js"
 import chalk from "chalk"
 
 
@@ -42,10 +43,14 @@ export const executeCommand = (user, fileSystem, currentDir, currentDirUrl, comm
             } else {
                 let filesAndDirs = currentDir.filesAndDirs
                 let directory = filesAndDirs.find(obj => obj.name === value) 
+                if(!directory.readRights.includes(user)) {
+                    addOperation(fileSystem, user, command, 2, "Access denied. You don't have rights to access the folder.")
+                    resolve([currentDir, currentDirUrl])
+                }
                 if(directory !== undefined) {
                     resolve([directory, currentDirUrl + `${directory.name}\\`])
                 } else {
-                    console.log("The directory does not exit")
+                    addOperation(fileSystem, user, command, 0, "The directory does not exit")
                     resolve([currentDir, currentDirUrl])
                 }
             }
@@ -61,7 +66,7 @@ export const executeCommand = (user, fileSystem, currentDir, currentDirUrl, comm
                 // fileSystem = updateFileSystem(fileSystem, oldDirsAndFiles, filesAndDirs)
                 saveFileSystem(fileSystem)
             } else {
-                console.log(`You don't have rights to edit this directory`)
+                addOperation(fileSystem, user, command, 2, `Acccess denied. You don't have rights to edit this directory: ${currentDirUrl}`)
             }
             resolve([fileSystem, currentDir])
             break
@@ -89,7 +94,7 @@ export const executeCommand = (user, fileSystem, currentDir, currentDirUrl, comm
                 // fileSystem = updateFileSystem(fileSystem, oldDirsAndFiles, filesAndDirs)
                 saveFileSystem(fileSystem)
             } else {
-                console.log(`You don't have rights to edit this directory`)
+                addOperation(fileSystem, user, command, 2, `Acccess denied. You don't have rights to edit this directory: ${currentDirUrl}`)
             }
             resolve([fileSystem, currentDir])
             break
@@ -103,7 +108,7 @@ export const executeCommand = (user, fileSystem, currentDir, currentDirUrl, comm
                 // fileSystem = updateFileSystem(fileSystem, oldDirsAndFiles, filesAndDirs)
                 saveFileSystem(fileSystem)
             } else {
-                console.log(`You don't have rights to edit this directory`)
+                addOperation(fileSystem, user, command, 2, `Acccess denied. You don't have rights to edit this directory: ${currentDirUrl}`)
             }
             resolve([fileSystem, currentDir])
             break

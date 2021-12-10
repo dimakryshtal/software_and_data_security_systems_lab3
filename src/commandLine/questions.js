@@ -1,6 +1,7 @@
 import { maxNumberOfFails } from "../index.js";
 import { rl } from "./commandLine.js";
 import { saveFileSystem } from "../data/fileSystem.js";
+import { addOperation } from "../commands/operations.js";
 
 
 export const askQuestion = (currUser, fileSystem) => new Promise(async (resolve, reject) => {
@@ -19,7 +20,8 @@ export const askQuestion = (currUser, fileSystem) => new Promise(async (resolve,
                     console.log("Right answer")
                     asnwered = true
                 } else {
-                    console.log("Wrong answer")
+                    
+                    addOperation(fileSystem, currUser, null, "Wrong answer. You have to log in again.")
                     user.numberOfMistakes++
                     saveFileSystem(fileSystem)
                     if(user.numberOfMistakes != maxNumberOfFails)process.exit(0)
@@ -32,8 +34,8 @@ export const askQuestion = (currUser, fileSystem) => new Promise(async (resolve,
             return
         }
     }
-    console.log("You've had too many errors")
     user.forbidden = true
+    addOperation(fileSystem, currUser, null, "You've had too many errors")
     saveFileSystem(fileSystem)
     process.exit(0)
 })

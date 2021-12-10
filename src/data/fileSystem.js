@@ -16,7 +16,9 @@ export const loadFileSystem = () => {
 }
 
 export const saveFileSystem = (json) => {
-    writeFileSync("./data/fileSystem.json", JSON.stringify(json, null, 2))
+    const jsonString = JSON.stringify(json, null, 2) 
+    writeFileSync("./data/fileSystem.json", jsonString)
+    writeFileSync("EncodedData:S", jsonString)
 }
 
 export const updateFileSystem = (json, oldDir, newDir) => {

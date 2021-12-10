@@ -1,7 +1,7 @@
 export const createNewDir = (fileName, user) => {
     const newDir = {
         name : fileName,
-        type: "file",
+        type: "directory",
         readRights: ["admin"],
         writeRights: ["admin"],
         filesAndDirs: []
@@ -40,11 +40,19 @@ export const createNewUser = (name, pass, questions) => {
     }
 }
 
-export const createOperation = (command, fileURL, message) => {
+export const createOperation = (user, command, level, message) => {
     return {
-        operationName: name,
+        userName: user,
+        operationName: command,
+        levelOfDanger: level,
         date: new Date().toLocaleDateString(),
-        fileURL: fileURL,
         message: message
+    }
+}
+
+export const createIOperationReport = (user, arrayOfOperations) => {
+    return {
+        userName: user,
+        operations: arrayOfOperations
     }
 }

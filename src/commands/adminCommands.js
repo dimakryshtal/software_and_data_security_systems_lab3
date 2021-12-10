@@ -12,7 +12,7 @@ const randomlyGetQuestions = (fileSystem) => {
     return arrayOfQuestions
 }
 
-export const regAndAuthCommands = (fileSystem, command, userName, password) => new Promise ((resolve, reject) =>{
+export const adminCommands = (fileSystem, command, userName = null, password = null) => new Promise ((resolve, reject) =>{
     switch(command){
         case "reguser":{
             const logBook = fileSystem.filesAndDirs.find(obj => obj.name == "logBook")
@@ -31,7 +31,18 @@ export const regAndAuthCommands = (fileSystem, command, userName, password) => n
                 resolve(fileSystem)
             }
         }
-
         break
+        case "prntoprep": {
+            const operationsLog = fileSystem.filesAndDirs.find(obj => obj.name == "operationsLog")
+            const report = operationsLog.report
+            if(report.length === 0) {
+                console.log("The report is not ready yet")
+            } else {
+                console.log(report)
+            }
+            resolve()
+            break
+            
+        }
     }
 })

@@ -1,7 +1,7 @@
 import * as readline from 'readline'
 import { executeCommand } from '../commands/commands.js'
 import { getNewUserName, getNewUserPassword, checkPassword } from './regAndAuth.js';
-import { regAndAuthCommands } from '../commands/regAndAuthCommands.js';
+import { adminCommands } from '../commands/adminCommands.js';
 
 export const rl = readline.createInterface(process.stdin, process.stdout)
 
@@ -30,23 +30,29 @@ export const getCommands = (currUser, fileSystem, currentDirUrl, currentDir = nu
         command = command.split(" ")
         if (command[0] === "mkdir" || command[0] === "rm" || command[0] == "vi") {
             if(command.length == 1) {
-                console.log("Wrong number of arguments")
+                addOperation(fileSystem, user, command[0], 0, "Wrong number of arguments")
             } else {
                 [fileSystem, currentDir] = await executeCommand(currUser, fileSystem, currentDir, currentDirUrl, command[0], command[1])
             }
         } else if (command[0] === "cd"){
             if(command.length == 1) {
-                console.log("Wrong number of arguments")
+                addOperation(fileSystem, user, command[0], 0, "Wrong number of arguments")
             } else {
                 [currentDir, currentDirUrl] = await executeCommand(currUser, fileSystem, currentDir, currentDirUrl, command[0], command[1])
             }
         } else if (command[0] === "reguser") {
             if (currUser != "admin") {
-                console.log("Only administrator is allowed to use the command")
+                caddOperation(fileSystem, user, command[0], 2, "Access deniesd. Only administrator is allowed to use the command")
             } else {
                 let newUserName = await getNewUserName()
                 let newUserPassword = await checkPassword()
-                fileSystem = await regAndAuthCommands(fileSystem, command[0], newUserName, newUserPassword)
+                fileSystem = await adminCommands(fileSystem, command[0], newUserName, newUserPassword)
+            }
+        } else if(command[0] === "prntoprep") {
+            if (currUser != "admin") {
+                caddOperation(fileSystem, user, command[0], 2,"Access deniesd. Only administrator is allowed to use the command")
+            } else {
+                await adminCommands(fileSystem, command[0])
             }
         } else {
             await executeCommand(currUser, fileSystem, currentDir, currentDirUrl, command[0])
